@@ -1,0 +1,43 @@
+{
+  "name": "encuestas-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "MONGODB_URI=mongodb://localhost:27017/encuestas jest --forceExit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejaramillom/encuestas-express.git"
+  },
+  "keywords": [],
+  "author": "Emmanuel Jaramillo Muñoz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ejaramillom/encuestas-express/issues"
+  },
+  "homepage": "https://github.com/ejaramillom/encuestas-express#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
+    "connect-timeout": "^1.9.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "flash": "^1.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.16",
+    "pug": "^2.0.4"
+  },
+  "engines": {
+    "node": "v13.1.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1",
+    "puppeteer": "^3.2.0",
+    "superagent": "^5.2.2",
+    "supertest": "^4.0.2"
+  }
+}
