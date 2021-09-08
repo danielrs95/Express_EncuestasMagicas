@@ -1,5 +1,5 @@
 {
-  "name": "encuestas-express",
+  "name": "MagicPolls",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,12 +7,7 @@
     "start": "node server.js",
     "test": "MONGODB_URI=mongodb://localhost:27017/encuestas jest --forceExit"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ejaramillom/encuestas-express.git"
-  },
   "keywords": [],
-  "author": "Emmanuel Jaramillo Muñoz",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ejaramillom/encuestas-express/issues"
@@ -29,6 +24,7 @@
     "flash": "^1.1.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",
+    "nodemon": "^2.0.12",
     "pug": "^2.0.4"
   },
   "engines": {

@@ -1,38 +1,28 @@
 extends layout
 
 block content
-  div( class = 'container expand' )
-    div( class = 'list expand' )
-      div( class = 'list-header' )
-        if !user
-          a( href = '/login')
-            i( class = 'fas fa-sign-out-alt' )
-            |
-            | Ingresar
-            |
-        else
-          a( href = '/newPoll' )
-            i( class = 'far fa-sticky-note' )
-            |
-            | Nueva Encuesta
-            |
-          a( href = '/logout')
-            i( class = 'fas fa-sign-out-alt' )
-            |
-            | Salir
-            |
 
-      if polls.length == 0
-        div( class = 'error' )
-          h4= 'No existe ninguna encuesta! '
-
-      each poll in polls
-        a( href = '/polls/' + poll._id class = 'poll' + ( currentPoll && currentPoll._id.equals( poll._id ) ? ' active' : ''))
-          div( class = 'poll-question' )= poll.question
-          div( class = 'poll-description' )= poll.truncateDescription()
-
-      if locals.message
-        div( class = 'success' )= message.success
-
-    div( class = 'body' )
-      block body
+  .row.row-cols-1.row-cols-md-2.g-4
+    .col
+      .card.h-100.border-primary
+        .card-body
+          h5.card-title Card title
+          p.card-text
+            | This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+    .col
+      .card.h-100
+        .card-body
+          h5.card-title Card title
+          p.card-text This is a short card.
+    .col
+      .card.h-100
+        .card-body
+          h5.card-title Card title
+          p.card-text
+            | This is a longer card with supporting text below as a natural lead-in to additional content.
+    .col
+      .card.h-100
+        .card-body
+          h5.card-title Card title
+          p.card-text
+            | This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.

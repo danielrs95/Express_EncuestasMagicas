@@ -12,7 +12,7 @@ const flash = require( 'connect-flash' );
 mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:27017/encuestas', { useNewUrlParser: true } );
 mongoose.set( 'useFindAndModify', false);
 
-const app = express();
+const app = express();  
 app.set( 'view engine', 'pug' );
 app.set( 'views', 'views' );
 
