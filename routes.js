@@ -1,13 +1,8 @@
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const User = require('./models/User');
 const Poll = require('./models/Poll');
 const express = require('express');
-const auth = require('./helpers/auth');
 const router = express.Router();
 const middlewares = require('./middlewares');
-
-router.use(auth.setUser);
 
 router.use(middlewares.setUser);
 
@@ -24,9 +19,7 @@ router.post('/login', async (req, res, next) => {
     const user = await User.authenticate(email, password);
     if (user) {
       req.session.userId = user._id; // acá guardamos el id en la sesión
-      res.render('index', {
-        success: `Welcome back ${user.name}`,
-      });
+      return res.redirect('/');
     } else {
       console.log('error');
       res.render('index', {
@@ -36,6 +29,14 @@ router.post('/login', async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
+});
+
+router.get('/logout', (req, res) => {
+  res.session = null;
+  res.clearCookie('express:sess');
+  res.clearCookie('express:sess.sig');
+  res.redirect('/');
+  // res.render('logout');
 });
 
 router.get('/register', (req, res) => {
@@ -74,115 +75,6 @@ router.get('/', async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-});
-
-router.get('/newPoll', auth.requireUser, async (req, res) => {
-  const newPoll = await Poll.find({ user: res.locals.user });
-  res.render('newPoll', { newPoll });
-});
-
-router.post('/newPoll', async (req, res) => {
-  const question = req.body.question;
-  const description = req.body.description;
-  const choiceOne = req.body.choiceOne;
-  const choiceTwo = req.body.choiceTwo;
-  const choiceThree = req.body.choiceThree;
-  const user = res.locals.user;
-
-  const data = {
-    question: question,
-    description: description,
-    user: user._id,
-    options: [{ text: choiceOne }, { text: choiceTwo }, { text: choiceThree }],
-  };
-
-  try {
-    const poll = await Poll.create(data);
-  } catch (e) {
-    res.render('newPoll', { error: 'No debe dejar datos vacios!' });
-  }
-  req.flash('success', 'Se creó encuesta correctamente!');
-  res.redirect('/');
-});
-
-router.get('/polls/:id', async (req, res) => {
-  const polls = await Poll.find().populate('user');
-  const poll = await Poll.findById(req.params.id).populate('user');
-  res.render('showPoll', { polls: polls, currentPoll: poll });
-});
-
-router.get('/polls/:id/edit', async (req, res, next) => {
-  try {
-    const polls = await Poll.find();
-    const poll = await Poll.findById(req.params.id);
-    res.render('editPoll', { polls: polls, currentPoll: poll });
-  } catch (e) {
-    return next(e);
-  }
-});
-
-router.post('/polls/:id/vote', async (req, res, next) => {
-  try {
-    const optionId = req.body.option;
-    await Poll.update(
-      { _id: req.params.id, 'options._id': optionId },
-      { $inc: { 'options.$.votes': 1 } }
-    );
-    res.redirect(`/polls/${req.params.id}/results`);
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.get('/polls/:id/results', async (req, res, next) => {
-  try {
-    const polls = await Poll.find().populate('user');
-    const poll = await Poll.findById(req.params.id).populate('user');
-    const path = req.protocol + '://' + req.get('host') + '/polls/' + poll._id;
-    res.render('resultPoll', {
-      polls: polls,
-      currentPoll: poll,
-      currentPath: path,
-    });
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.post('/polls/:id', auth.requireUser, async (req, res, next) => {
-  const question = req.body.question;
-  const description = req.body.description;
-  const choiceOne = req.body.choiceOne;
-  const choiceTwo = req.body.choiceTwo;
-  const choiceThree = req.body.choiceThree;
-
-  try {
-    let id = req.params.id;
-    const data = {
-      question: question,
-      description: description,
-      options: [
-        { text: choiceOne },
-        { text: choiceTwo },
-        { text: choiceThree },
-      ],
-    };
-    await Poll.update({ _id: id }, data);
-    res.redirect('/');
-  } catch (e) {
-    next(e);
-  }
-});
-
-router.delete('/polls/:id', async (req, res) => {
-  await Poll.deleteOne({ _id: req.params.id });
-  res.status(204).send({});
-});
-
-router.get('/logout', auth.requireUser, (req, res) => {
-  res.clearCookie('token');
-  req.flash('success', 'Has salido correctamente!');
-  res.redirect('/');
 });
 
 module.exports = router;

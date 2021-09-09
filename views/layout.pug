@@ -10,12 +10,6 @@ html
 
   body
 
-
-
-
-
-
-
     //- Modal 1
     #exampleModalToggle.modal.fade(aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered
@@ -88,14 +82,14 @@ html
           data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
           span.navbar-toggler-icon
         #navbarSupportedContent.collapse.navbar-collapse.justify-content-end
-          a.btn.btn-outline-primary(data-bs-toggle='modal' href='#exampleModalToggle' role='button')
-            i.fas.fa-user
-
+          if user
+            a.btn.btn-outline-danger(href='/logout' role='button')
+              i.fas.fa-sign-out-alt
+          else
+            a.btn.btn-outline-primary(data-bs-toggle='modal' href='#exampleModalToggle' role='button')
+              i.fas.fa-user
 
   .container.mt-4(style="top:58px")
-
-    if user
-      h1 usuario login
 
     block content
 
