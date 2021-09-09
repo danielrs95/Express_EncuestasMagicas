@@ -5,8 +5,11 @@ const Poll = require('./models/Poll');
 const express = require('express');
 const auth = require('./helpers/auth');
 const router = express.Router();
+const middlewares = require('./middlewares');
 
 router.use(auth.setUser);
+
+router.use(middlewares.setUser);
 
 router.get('/login', (req, res) => {
   res.render('index');
@@ -20,17 +23,10 @@ router.post('/login', async (req, res, next) => {
   try {
     const user = await User.authenticate(email, password);
     if (user) {
-      const token = jwt.sign({ userId: user._id }, 'secretcode');
-      res.cookie('token', token, {
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        httpOnly: true,
-      });
+      req.session.userId = user._id; // acá guardamos el id en la sesión
       res.render('index', {
         success: `Welcome back ${user.name}`,
       });
-      console.log(user);
-      console.log(email, password);
-      // return res.redirect('/');
     } else {
       console.log('error');
       res.render('index', {
