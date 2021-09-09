@@ -9,13 +9,13 @@ const router = express.Router();
 router.use(auth.setUser);
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('index');
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  console.log(email, password);
+  // console.log(email, password);
 
   try {
     const user = await User.authenticate(email, password);
@@ -28,7 +28,8 @@ router.post('/', async (req, res, next) => {
       req.flash('success', 'Ingresó correctamente!');
       return res.redirect('/');
     } else {
-      res.render('index', {
+      console.log('error');
+      res.send( {
         error: 'Correo o constraseña incorrecto. Intentalo de nuevo!',
       });
     }
@@ -38,31 +39,29 @@ router.post('/', async (req, res, next) => {
 });
 
 router.get('/register', (req, res) => {
-  res.render('newUser');
+  res.render('index');
 });
 
 router.post('/register', async (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+  console.log(email, password);
 
   const data = {
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
+    name: name,
+    email: email,
+    password: password,
   };
 
   try {
     const user = await User.create(data);
     console.log(data);
   } catch (e) {
-    console.error(e);
-    res.render('newUser', {
+    res.render('index', {
       error: 'No debe dejar datos vacios. Intentalo de nuevo!',
     });
   }
-  req.flash('success', 'Se creó usuario correctamente! ahora puede ingresar');
-  res.render('/');
 });
 
 router.get('/', async (req, res, next) => {
