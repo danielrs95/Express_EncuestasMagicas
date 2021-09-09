@@ -25,11 +25,15 @@ router.post('/login', async (req, res, next) => {
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         httpOnly: true,
       });
-      req.flash('success', 'Ingresó correctamente!');
-      return res.redirect('/');
+      res.render('index', {
+        success: `Welcome back ${user.name}`,
+      });
+      console.log(user);
+      console.log(email, password);
+      // return res.redirect('/');
     } else {
       console.log('error');
-      res.render("index", {
+      res.render('index', {
         error: 'Email or Password wrong, try again',
       });
     }
@@ -56,10 +60,13 @@ router.post('/register', async (req, res) => {
 
   try {
     const user = await User.create(data);
-    console.log(data);
-  } catch (e) {
     res.render('index', {
-      error: 'No debe dejar datos vacios. Intentalo de nuevo!',
+      success: 'Succesfull registration',
+    });
+  } catch (e) {
+    // console.log(e)
+    res.render('index', {
+      error: 'This email is already registered',
     });
   }
 });

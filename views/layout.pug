@@ -97,8 +97,13 @@ html
     block content
 
     if error
-      .alert.alert-danger.alert-dismissible.fade.show.mt-4.w-50.position-fixed.top-0(role='alert' style="right: 1.5rem" )
+      .alert.alert-danger.alert-dismissible.fade.show.mt-4.position-fixed.top-0(role='alert' style="right: 1.5rem" )
         strong= error
+        button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
+
+    if success
+      .alert.alert-success.alert-dismissible.fade.show.mt-4.position-fixed.top-0(role='alert' style="right: 1.5rem" )
+        strong= success
         button.btn-close(type='button' data-bs-dismiss='alert' aria-label='Close')
 
     script.
