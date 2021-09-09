@@ -84,9 +84,12 @@ html
         #navbarSupportedContent.collapse.navbar-collapse.justify-content-end
           if user
             a.btn.btn-outline-danger(href='/logout' role='button')
+              span=user.name
+              span.mx-1 Logout
               i.fas.fa-sign-out-alt
           else
             a.btn.btn-outline-primary(data-bs-toggle='modal' href='#exampleModalToggle' role='button')
+              span.me-1 Login
               i.fas.fa-user
 
   .container.mt-4(style="top:58px")

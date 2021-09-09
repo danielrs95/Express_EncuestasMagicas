@@ -19,7 +19,8 @@ router.post('/login', async (req, res, next) => {
     const user = await User.authenticate(email, password);
     if (user) {
       req.session.userId = user._id; // acá guardamos el id en la sesión
-      return res.redirect('/');
+      res.redirect('/');
+      // res.render('index', { success: `Welcome back ${user.name}` });
     } else {
       console.log('error');
       res.render('index', {
@@ -57,9 +58,8 @@ router.post('/register', async (req, res) => {
 
   try {
     const user = await User.create(data);
-    res.render('index', {
-      success: 'Succesfull registration',
-    });
+    req.session.userId = user._id;
+    res.redirect('/');
   } catch (e) {
     // console.log(e)
     res.render('index', {
