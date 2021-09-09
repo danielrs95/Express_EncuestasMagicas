@@ -29,8 +29,8 @@ router.post('/login', async (req, res, next) => {
       return res.redirect('/');
     } else {
       console.log('error');
-      res.send( {
-        error: 'Correo o constraseña incorrecto. Intentalo de nuevo!',
+      res.render("index", {
+        error: 'Email or Password wrong, try again',
       });
     }
   } catch (e) {
