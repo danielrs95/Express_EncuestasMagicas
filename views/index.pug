@@ -58,8 +58,10 @@ block content
             .card-body
               p.card-text=poll.description
               ul
-                each option in poll.options
+                each option,i in poll.options
                   li= option.text
+                  .progress.mb-3
+                    .progress-bar(role='progressbar' style=`width: ${poll.optionPercentage(i)}%;` aria-valuenow='25' aria-valuemin='0' aria-valuemax='100') #{poll.optionPercentage(i)}%
 
             .card-footer.p-0
               .row.p-1
