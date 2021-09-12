@@ -44,7 +44,10 @@ block content
 
             .card-header
               .d-flex.justify-content-between.align-items-center
-                h5.m-0=poll.question
+                div
+                  h5.m-0=poll.question
+                  if user && poll.user
+                    span By: #{poll.user.name}
                 div
                   if user && poll.user && poll.user._id.equals(user._id)
                     a.btn.btn-outline-primary.me-1(href=`/polls/${poll._id}` role="button")
