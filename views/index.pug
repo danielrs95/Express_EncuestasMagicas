@@ -2,27 +2,63 @@ extends layout
 
 block content
 
+  #exampleModalToggle3.modal.fade(aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1')
+    .modal-dialog.modal-dialog-centered
+      .modal-content
+        .modal-header
+          h5#exampleModalToggleLabel.modal-title New Poll
+          button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+
+        .modal-body
+          form.needs-validation(action="/newPoll" method="post" novalidate)
+
+            .form-floating.mb-3
+              input#question.form-control(type='text' name="question"  placeholder='Question' required)
+              label(for='question') Poll name
+              .invalid-tooltip Poll name cant be blank
+
+            .form-floating.mb-3
+              input#description.form-control(type='text' name="description"  placeholder='Poll description' required)
+              label(for='description') Poll description
+              .invalid-tooltip Description cant be blank
+
+            .form-floating.mb-3
+              input#option1.form-control(type='text' name="options[0][text]" placeholder="Option1" required)
+              label(for='option1') Option 1
+              .invalid-tooltip Option 1 cant be blank
+
+            .form-floating
+              input#option2.form-control(type='text' name="options[1][text]" placeholder='option2' required)
+              label(for='option2') Option 2
+              .invalid-tooltip Option2 cant be blank
+
+            .d-flex.justify-content-evenly
+              a.btn.btn-danger.mt-3(href="/" role="button") Cancel
+              button.btn.btn-success.mt-3(type='submit') Create
+
   .row.row-cols-1.row-cols-md-2.g-4
-    .col
-      .card.h-100.border-primary
-        .card-body
-          h5.card-title Card title
-          p.card-text
-            | This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
-    .col
-      .card.h-100
-        .card-body
-          h5.card-title Card title
-          p.card-text This is a short card.
-    .col
-      .card.h-100
-        .card-body
-          h5.card-title Card title
-          p.card-text
-            | This is a longer card with supporting text below as a natural lead-in to additional content.
-    .col
-      .card.h-100
-        .card-body
-          h5.card-title Card title
-          p.card-text
-            | This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.
+    each poll in polls
+      .col
+        .card.h-100.border-primary
+
+          .card-header
+            .d-flex.justify-content-between.align-items-center
+              h5.m-0=poll.question
+              div
+                if user && poll.user && poll.user._id.equals(user._id)
+                  a.btn.btn-outline-primary.me-1(href=`/polls/${poll._id}` role="button")
+                    i.fas.fa-edit
+                  a.btn.btn-outline-danger(href=`/polls/${poll._id}/delete` role="button" onclick="return confirm('Delete this poll?')")
+                    i.fas.fa-trash
+
+          .card-body
+            p.card-text=poll.description
+
+          .card-footer.p-0
+            .row.p-1
+              .col.border-end.text-center.text-muted #{poll.votes()} votes
+              .col.text-center
+                a(href=`/polls/${poll._id}/vote` role="button") Vote
+
+            //- each pollOption in poll.options
+            //-   button.btn.btn-outline-primary=pollOption.text

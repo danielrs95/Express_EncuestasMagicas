@@ -1,9 +1,10 @@
-const User = require('../models/User');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 exports.login = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  // console.log(email, password);
+  console.log(email, password);
 
   try {
     const user = await User.authenticate(email, password);

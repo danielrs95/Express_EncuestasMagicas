@@ -1,0 +1,22 @@
+extends layout
+
+block content
+
+  .row.justify-content-center
+    .col-8
+      .card
+        .card-body
+          h5.card-title #{poll.question}
+          h6.card-subtitle.mb-2.text-muted #{poll.user.name}
+          p #{poll.description}
+
+      .card.mt-3
+        .card-body
+          form(action=`/polls/${poll._id}/vote` method="post")
+            each option, i in poll.options
+              .form-check
+                input.form-check-input(type='radio' name='answer' value=i id=`answer${i}`)
+                label.form-check-label(for=`answer${i}`)
+                  | #{option.text}
+
+            input.btn.btn-outline-primary(type='submit')

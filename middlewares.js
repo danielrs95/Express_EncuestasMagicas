@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const User = require('./models/User');
+// const User = mongoose.model('User');
 
 // authentication middleware
 exports.setUser = async (req, res, next) => {
@@ -18,7 +19,7 @@ exports.setUser = async (req, res, next) => {
 
 exports.requireUser = (req, res, next) => {
   if (!res.locals.user) {
-    return res.redirect('/login');
+    return res.render('/', { message: 'Login first' });
   }
   next();
 };

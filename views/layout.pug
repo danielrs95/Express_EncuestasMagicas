@@ -83,6 +83,8 @@ html
           span.navbar-toggler-icon
         #navbarSupportedContent.collapse.navbar-collapse.justify-content-end
           if user
+            a.btn.btn-outline-primary.me-2(data-bs-toggle='modal' href='#exampleModalToggle3' role='button') New Poll
+
             a.btn.btn-outline-danger(href='/logout' role='button')
               span=user.name
               span.mx-1 Logout

@@ -1,0 +1,36 @@
+extends layout
+
+block content
+
+  .row.justify-content-center
+    .col-8
+      .card
+
+        .card-header Edit Poll
+
+        .card-body
+          form.needs-validation(action="/newPoll" method="post" novalidate)
+
+            .form-floating.mb-3
+              input#question.form-control(type='text' name="question" value=`${poll.question}` placeholder='Question'  required)
+              label(for='question') Poll name
+              .invalid-tooltip Poll name cant be blank
+
+            .form-floating.mb-3
+              input#description.form-control(type='text' name="description"  value=`${poll.description}` placeholder='Poll description' required)
+              label(for='description') Poll description
+              .invalid-tooltip Description cant be blank
+
+            .form-floating.mb-3
+              input#option1.form-control(type='text' name="options[0][text]" value=`${poll.options[0].text}` placeholder="Option1" required)
+              label(for='option1') Option 1
+              .invalid-tooltip Option 1 cant be blank
+
+            .form-floating
+              input#option2.form-control(type='text' name="options[1][text]" value=`${poll.options[1].text}` placeholder='option2' required)
+              label(for='option2') Option 2
+              .invalid-tooltip Option2 cant be blank
+
+            .d-flex.justify-content-evenly
+              a.btn.btn-danger.mt-3(href="/" role="button") Cancel
+              button.btn.btn-success.mt-3(type='submit') Create

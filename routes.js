@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const middlewares = require('./middlewares');
 const userController = require('./controllers/userController');
+const pollController = require('./controllers/pollController');
 
 router.use(middlewares.setUser);
 
@@ -10,13 +11,14 @@ router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.get('/logout', userController.logout);
 
-router.get('/', async (req, res, next) => {
-  try {
-    const polls = await Poll.find().populate('User');
-    res.render('index', { polls: polls });
-  } catch (e) {
-    next(e);
-  }
-});
+// Rutas para las polls
+router.get('/newPoll', pollController.newPoll);
+router.post('/newPoll', pollController.createPoll);
+router.get('/polls/:id', pollController.getPollById);
+router.get('/polls/:id/delete', pollController.deletePoll);
+router.get('/polls/:id/vote', pollController.votePoll);
+router.post('/polls/:id/vote', pollController.postVote);
+
+router.get('/', pollController.getPolls);
 
 module.exports = router;
