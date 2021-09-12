@@ -57,6 +57,9 @@ block content
 
             .card-body
               p.card-text=poll.description
+              ul
+                each option in poll.options
+                  li= option.text
 
             .card-footer.p-0
               .row.p-1
