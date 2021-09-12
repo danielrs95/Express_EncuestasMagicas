@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
-// const Poll = require('./models/Poll');
+const Poll = require('./models/Poll');
 
 // const User = mongoose.model('User');
 
@@ -27,4 +27,9 @@ exports.requireUser = (req, res, next) => {
     });
   }
   next();
+};
+
+exports.getPolls = async (req, res) => {
+  const polls = await Poll.find().populate('user');
+  res.render('index', { polls });
 };

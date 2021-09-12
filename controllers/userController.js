@@ -13,7 +13,6 @@ exports.login = async (req, res, next) => {
       res.redirect('/');
       // res.render('index', { success: `Welcome back ${user.name}` });
     } else {
-      console.log('error');
       res.render('index', {
         error: 'Email or Password wrong, try again',
       });
