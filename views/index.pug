@@ -37,28 +37,28 @@ block content
               button.btn.btn-success.mt-3(type='submit') Create
 
   .row.row-cols-1.row-cols-md-2.g-4
-    each poll in polls
-      .col
-        .card.h-100.border-primary
+    if polls
+      each poll in polls
+        .col
+          .card.h-100.border-primary
 
-          .card-header
-            .d-flex.justify-content-between.align-items-center
-              h5.m-0=poll.question
-              div
-                if user && poll.user && poll.user._id.equals(user._id)
-                  a.btn.btn-outline-primary.me-1(href=`/polls/${poll._id}` role="button")
-                    i.fas.fa-edit
-                  a.btn.btn-outline-danger(href=`/polls/${poll._id}/delete` role="button" onclick="return confirm('Delete this poll?')")
-                    i.fas.fa-trash
+            .card-header
+              .d-flex.justify-content-between.align-items-center
+                h5.m-0=poll.question
+                div
+                  if user && poll.user && poll.user._id.equals(user._id)
+                    a.btn.btn-outline-primary.me-1(href=`/polls/${poll._id}` role="button")
+                      i.fas.fa-edit
+                    a.btn.btn-outline-danger(href=`/polls/${poll._id}/delete` role="button" onclick="return confirm('Delete this poll?')")
+                      i.fas.fa-trash
 
-          .card-body
-            p.card-text=poll.description
+            .card-body
+              p.card-text=poll.description
 
-          .card-footer.p-0
-            .row.p-1
-              .col.border-end.text-center.text-muted #{poll.votes()} votes
-              .col.text-center
-                a(href=`/polls/${poll._id}/vote` role="button") Vote
-
-            //- each pollOption in poll.options
-            //-   button.btn.btn-outline-primary=pollOption.text
+            .card-footer.p-0
+              .row.p-1
+                .col.border-end.text-center.text-muted #{poll.votes()} votes
+                .col.text-center
+                  a(href=`/polls/${poll._id}/vote` role="button") Vote
+    else
+      span

@@ -12,10 +12,14 @@ router.post('/register', userController.register);
 router.get('/logout', userController.logout);
 
 // Rutas para las polls
-router.get('/newPoll', pollController.newPoll);
+// router.get('/newPoll', middlewares.requireUser, pollController.newPoll);
 router.post('/newPoll', pollController.createPoll);
-router.get('/polls/:id', pollController.getPollById);
-router.get('/polls/:id/delete', pollController.deletePoll);
+router.get('/polls/:id', middlewares.requireUser, pollController.getPollById);
+router.get(
+  '/polls/:id/delete',
+  middlewares.requireUser,
+  pollController.deletePoll
+);
 router.get('/polls/:id/vote', pollController.votePoll);
 router.post('/polls/:id/vote', pollController.postVote);
 

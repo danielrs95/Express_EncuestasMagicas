@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
+// const Poll = require('./models/Poll');
+
 // const User = mongoose.model('User');
 
 // authentication middleware
@@ -19,7 +21,10 @@ exports.setUser = async (req, res, next) => {
 
 exports.requireUser = (req, res, next) => {
   if (!res.locals.user) {
-    return res.render('/', { message: 'Login first' });
+    // const polls = [];
+    return res.render('index', {
+      error: 'You cant access this route, log in first',
+    });
   }
   next();
 };
