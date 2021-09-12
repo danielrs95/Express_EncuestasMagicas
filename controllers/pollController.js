@@ -50,12 +50,13 @@ exports.votePoll = async (req, res) => {
 
 exports.postVote = async (req, res) => {
   const answer = req.body.answer;
-  console.log(answer);
+  // console.log(answer);
 
   const poll = await Poll.findOne({ _id: req.params.id });
   poll.options[answer].votes += 1;
   await poll.save();
-  console.log(poll);
-  res.render('pollResults', { poll });
+  // console.log(poll);
+  // res.render('pollResults', { poll });
+  res.redirect('/');
   // res.redirect(`/polls/${poll._id}/results`);
 };

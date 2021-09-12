@@ -22,7 +22,6 @@ router.get(
 );
 router.get('/polls/:id/vote', pollController.votePoll);
 router.post('/polls/:id/vote', pollController.postVote);
-
 router.get('/', pollController.getPolls);
 
 module.exports = router;
